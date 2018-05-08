@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="jquery-3.2.1.js"></script>
+  <script src="popper.min.js"></script>
+  <script src="bootstrap/js/bootstrap.min.js"> </script>
+</head>
+<body>
+  <div id="app">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background: #c7c7c7;margin-bottom: 10px;">
+      <div class="input-group">
+        <div class="input-group-append">
+          <button type="button" @click="openSingIn" name="button">Accedi</button>
+          <button type="button" @click="openSingUp" name="button">Registrati</button>
+          <button type="button" @click="logout" name="button">LogOut</button>
+        </div>
+      </div>
+    </nav>
+    <div class="container row">
+      <singin-form v-if="singInShow" v-bind:email='email' v-bind:password='password' v-bind:fn='singin'></singin-form>
+      <singup-form v-if="singUpShow"  v-bind:name='name' v-bind:surname='surname' v-bind:email='emailSingUp' v-bind:password='passwordSingUp' v-bind:fn='singup'></singup-form>
+      <div v-if="datasent" class="alert alert-success" role="alert">
+        <p v-model="dataSent"><h4 class="alert-heading">Dati Inviati con sucesso</h4><hr>
+          name:{{dataSent.name}}
+          <br></br>surname:{{dataSent.surname}}
+          <br></br>email:{{dataSent.email}}
+          <br></br>password:{{dataSent.password}}<p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+      </div>
+      <div v-if="datasentError" class="alert alert-danger" role="alert">error to send data
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+    <div>
+      <chat v-bind:texts="textChat" v-bind:input="chatId" v-bind:fn1="getText" v-bind:message="newMessage" v-bind:fn2="sendMessage"></chat>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+          <ul class="list-group">
+            <h1>users</h1>
+            <li class="list-group-item" v-for="user in users" v-if="user._id!=me._id" >id:{{user._id}} <button class="btn btn-primary" @click="getIdChat(user._id)">Open Chat</button>
+               <br></br> name: {{user.name}} <br></br>email: {{user.email}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+<script src="bower_components/vue/dist/vue.min.js"></script>
+<script src="bower_components/vue-resource/dist/vue-resource.js"></script>
+<script src="bower_components/vue-router/dist/vue-router.min.js"></script>
+<script src="components.js"></script>
+<script src="app.js"></script>
+</html>
